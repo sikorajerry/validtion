@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:element name="Template_v6.0">
+		<xs:complexType>
+            <xs:sequence>
+                <xs:element ref="Operation"/>
+				<xs:element ref="Input_Output" maxOccurs="unbounded"/>
+				<xs:element ref="Structure"/>
+				<xs:element ref="InputConfig"/>
+				<xs:element ref="OutputConfig" minOccurs="0"/>
+			</xs:sequence>
+            <xs:attribute name="createdWith" type="xs:string" use="optional"/>
+        </xs:complexType>
+	</xs:element>
+	<xs:element name="Operation">
+		<xs:complexType>
+			<xs:attribute name="operationType" type="OperationType" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Input_Output">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="InputFileName"/>
+				<xs:element ref="OutputFileName" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="InputFileName">
+		<xs:complexType mixed="true">
+			<xs:attribute name="format" type="FormatType" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OutputFileName">
+		<xs:complexType mixed="true">
+			<xs:attribute name="format" type="FormatType" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Structure">
+		<xs:complexType>	
+		   <xs:sequence>	      
+				<xs:choice>
+					<xs:element ref="DSD"/>
+					<xs:element ref="Registry"/>				
+				</xs:choice>
+				<xs:element name="isDataFlow" type="xs:boolean"/>	
+		    </xs:sequence>		   
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DSD">
+		<xs:complexType>
+		    <xs:simpleContent>
+		        <xs:extension base="xs:string">
+					<xs:attribute name="agency" type="IDType" use="required"/>
+					<xs:attribute name="id" type="IDType" use="required"/>
+					<xs:attribute name="version" type="xs:string" use="required"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Registry">
+		<xs:complexType>
+		    <xs:attribute name="url" type="xs:string" use="required"/>
+			<xs:attribute name="agency" type="IDType" use="required"/>
+			<xs:attribute name="id" type="IDType" use="required"/>
+			<xs:attribute name="version" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="InputConfig">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Header" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:choice>
+								<xs:element name="HeaderFileName" type="xs:string" minOccurs="0"/>
+								<xs:element name="HeaderInformation" type="xs:string" minOccurs="0"/>
+							</xs:choice>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ErrorIfEmpty" type="xs:boolean" minOccurs="0"/>
+				<xs:choice>
+					<xs:element ref="CSVInput" minOccurs="0"/>
+					<xs:element ref="ExcelInput" minOccurs="0"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CSVInput">
+	<xs:complexType>
+		<xs:sequence>
+				<xs:element name="InputOrdered" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="SubFieldSeparator" type="xs:string"  minOccurs="0" maxOccurs="1"/>
+				<xs:element name="InputMapMeasures" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="AllowAdditionalColumns" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="InputTranscodingMeasures" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="HasDoubleQuotes" type="xs:boolean"/>
+				<xs:element ref="CsvInputHeaderRow"/>
+				<xs:element ref="DateFormat"/>
+				<xs:element ref="MappingInfo" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="Mapping" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="Transcoding" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="Delimiter"/>
+		   </xs:sequence>	    
+		    <xs:attribute name="isSDMX" type="xs:boolean" use="optional"/>
+			<xs:attribute name="level" type="xs:integer" default="1"/>
+	</xs:complexType>
+	</xs:element>	
+	<xs:element name="CsvInputHeaderRow">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+                <xs:enumeration value="" />
+				<xs:enumeration value="USE_COLUMN_HEADERS"/>
+				<xs:enumeration value="DISREGARD_COLUMN_HEADERS"/>
+				<xs:enumeration value="NO_COLUMN_HEADERS"/>				
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DateFormat">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="" />
+				<xs:enumeration value="SDMX"/>
+				<xs:enumeration value="GESMES"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MappingInfo">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+                <xs:enumeration value="" />
+				<xs:enumeration value="Map measure Dimension"/>
+				<xs:enumeration value="Map CrossX measures"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Mapping">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Concept" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Concept">
+		<xs:complexType>
+			<xs:attribute name="fixed" type="xs:boolean" use="optional"/>
+			<xs:attribute name="level" type="xs:string" use="optional"/>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="value" type="xs:string" use="optional"/>
+			<xs:attribute name="targetconcept" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Transcoding">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="StructureSet" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="StructureSet">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CodelistMap" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CodelistMap">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CodeMap" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CodeMap">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MapCodeRef"/>
+				<xs:element ref="MapTargetCodeRef"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MapCodeRef" type="xs:string"/>
+	<xs:element name="MapTargetCodeRef" type="xs:string"/>
+	<xs:element name="ExcelInput">
+		<xs:complexType>
+			<xs:sequence>
+					<xs:element name="ParametersInExternalFile" minOccurs="0" maxOccurs="1"/>
+					<xs:element ref="ParameterSheetMapping"  minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ParameterSheetMapping">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ParameterPair" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ParameterPair">
+		<xs:complexType>
+			<xs:attribute name="dataSheetName" type="xs:string" use="required"/>
+			<xs:attribute name="parameterSheetName" type="xs:string" use="required"/>		
+		</xs:complexType>
+	</xs:element>
+    <xs:element name="OutputConfig">
+		<xs:complexType>
+		   <xs:sequence>
+				<xs:choice>
+					<xs:element ref="CSVOutput" minOccurs="0"/>
+				    <xs:element ref="ExcelOutput" minOccurs="0"/>		
+				    <xs:element ref="SdmxOutput" minOccurs="0"/>		
+				    <xs:element ref="GesmesOutput" minOccurs="0"/>			
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+		<xs:element name="CSVOutput">
+	<xs:complexType>
+		<xs:sequence>	
+				<xs:element name="UseDoubleQuotes" type="xs:boolean" />	
+				<xs:element name="OutputMapMeasures" type="xs:boolean" minOccurs="0" maxOccurs="1"/>	
+				<xs:element name="OutputTranscodingMeasures" type="xs:boolean" minOccurs="0" maxOccurs="1"/>	
+				<xs:element ref="CsvOutputHeaderRow"/>
+				<xs:element ref="DateFormat"/>
+				<xs:element ref="MappingInfo" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="Mapping" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="Transcoding" minOccurs="0" maxOccurs="1"/>	
+				<xs:element ref="Delimiter"/>
+				<xs:element name="WriteLabel" type="xs:string"/>
+		   </xs:sequence>	    
+		    <xs:attribute name="isSDMX" type="xs:boolean" use="optional"/>
+			<xs:attribute name="level" type="xs:integer" default="1"/>
+	</xs:complexType>
+	</xs:element>	
+	<xs:element name="CsvOutputHeaderRow">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+                <xs:enumeration value="" />
+				<xs:enumeration value="NO_COLUMN_HEADERS"/>
+				<xs:enumeration value="USE_COLUMN_HEADERS"/>			
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Delimiter" type="xs:string"/>
+	<xs:element name="ExcelOutput">
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element name="ExcelTemplate"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SdmxOutput">
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element ref="URN"/>
+				<xs:element ref="Prefix"/>
+				<xs:element ref="ReportingPeriod"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="URN" type="xs:anyURI"/>
+	<xs:element name="Prefix" type="xs:NCName"/>
+	<xs:element name="ReportingPeriod">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Day"/>
+				<xs:element ref="Month"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Day" default="1">
+		<xs:simpleType>
+			<xs:restriction base="xs:integer">
+				<xs:minInclusive value="1" />
+				<xs:maxInclusive value="31"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Month" default="1">
+		<xs:simpleType>
+			<xs:restriction base="xs:integer">
+				<xs:minInclusive value="1" />
+				<xs:maxInclusive value="12" />
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="GesmesOutput">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Ts_Technique"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Ts_Technique">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+                <xs:enumeration value="" />
+				<xs:enumeration value="Time Range"/>
+				<xs:enumeration value="Single Observation"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:simpleType name="FormatType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CSV"/>
+			<xs:enumeration value="FLR"/>
+			<xs:enumeration value="MULTI_LEVEL_CSV"/>
+			<xs:enumeration value="SDMX_CSV"/>
+			<xs:enumeration value="SDMX_CSV_2_0"/>
+			<xs:enumeration value="iSDMX_CSV"/>
+			<xs:enumeration value="iSDMX_CSV_2_0"/>
+			<xs:enumeration value="COMPACT_SDMX"/>
+			<xs:enumeration value="GENERIC_SDMX"/>
+			<xs:enumeration value="UTILITY_SDMX"/>
+			<xs:enumeration value="CROSS_SDMX"/>
+			<xs:enumeration value="GESMES_TS"/>
+			<xs:enumeration value="GESMES_2_1"/>
+			<xs:enumeration value="GENERIC_DATA_2_1"/>
+			<xs:enumeration value="GENERIC_TS_DATA_2_1"/>
+			<xs:enumeration value="STRUCTURE_SPECIFIC_DATA_2_1"/>
+			<xs:enumeration value="STRUCTURE_SPECIFIC_TS_DATA_2_1"/>
+			<xs:enumeration value="STRUCTURE_SPECIFIC_DATA_3_0"/>
+			<xs:enumeration value="EXCEL"/>
+			<xs:enumeration value="MESSAGE_GROUP"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OperationType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Convert"/>
+			<xs:enumeration value="Validation"/>
+			<xs:enumeration value="Validation and Conversion"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IDType">
+		<xs:annotation>
+			<xs:documentation>IDType provides a type which is used for restricting the characters in codes and IDs throughout all SDMX-ML messages. Valid characters include A-Z, a-z, @, 0-9, _, -, $.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([A-Z]|[a-z]|\*|@|[0-9]|_|$|\-|/|=)*"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,39 @@
+{
+  "endpoints": [
+    {
+      "url": "https://registry.sdmx.org/ws/public/sdmxapi/rest",
+      "type": "Rest v1",
+      "label": "SDMX Global Registry (for SDMX 2.1)"
+    },
+    {
+      "url": "https://webgate.acceptance.ec.europa.eu/fusionregistry/sdmx/v2",
+      "type": "Rest v2",
+      "label": "new Euro-SDMX Registry ACC (for SDMX 3.0 and 2.1)"
+    },
+    {
+      "url": "https://ec.europa.eu/sdmxregistry/rest",
+      "type": "Rest v1",
+      "label": "Euro-SDMX registry (for SDMX 2.1)"
+    },
+    {
+      "url": "https://registry.sdmx.org/sdmx/v2",
+      "type": "Rest v2",
+      "label": "new SDMX Global Registry (for SDMX 3.0 and 2.1)"
+    },
+    {
+      "url": "https://ec.europa.eu/sdmxregistry/SdmxRegistryV20Service?wsdl",
+      "type": "Soap",
+      "label": "Euro-SDMX Registry (for SDMX 2.0)"
+    },
+    {
+      "url": "https://sdmxcentral.imf.org/ws/public/sdmxapi/rest",
+      "type": "Rest v1",
+      "label": "IMF SDMX Central"
+    },
+    {
+      "url": "https://data-api.ecb.europa.eu/service",
+      "type": "Rest v1",
+      "label": "ECB Data API"
+    }
+  ]
+}

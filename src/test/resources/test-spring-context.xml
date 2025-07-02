@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<beans 	xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	
+	<context:annotation-config />
+  	<context:spring-configured />
+
+    <context:component-scan base-package="org.sdmxsource" >
+		<context:exclude-filter type="assignable" expression="org.sdmxsource.sdmx.dataparser.factory.SdmxDataReaderFactory"/>
+    </context:component-scan>
+    <context:component-scan base-package="org.estat" >
+        <context:exclude-filter type="regex"
+                                expression="org.estat.sdmxsource.sdmx.structureparser.builder.query.impl.QueryBeanBuilderV2*" />
+        <context:exclude-filter type="regex"
+                                expression="org\.estat\.sdmxsource\.sdmx\.structureparser\.builder\.xmlBeans\.v2\.ConceptXmlBeanBuilder" />
+        <context:exclude-filter type="regex"
+                                expression="org\.estat\.sdmxsource\.sdmx\.structureparser\.builder\.xmlBeans\.v2\.MetadataAttributeXmlBeanBuilder" />
+        <context:exclude-filter type="regex"
+                                expression="org\.estat\.sdmxsource\.sdmx\.structureparser\.builder\.xmlBeans\.v2\.MetadataStructureDefinitionXmlBeansBuilder" />
+        <context:exclude-filter type="regex"
+                                expression="org\.estat\.sdmxsource\.sdmx\.structureparser\.manager\.parsing\.impl\.QueryParsingManagerImpl" />
+ 		<context:exclude-filter type="regex"
+                                expression="org\.estat\.sdmxsource\.sdmx\.structureparser\.manager\.parsing\.impl\.StructureParsingManagerStaxImpl" />
+    </context:component-scan>
+    <context:component-scan base-package="com.intrasoft" />       
+
+	<bean id="readableDataLocationFactory" class="org.sdmxsource.util.factory.SdmxSourceReadableDataLocationFactory" />
+	<bean id="readableDataLocationByProxyFactory" class="org.sdmxsource.util.factory.SdmxSourceReadableDataLocationByProxyFactory" />  
+	<bean id="writeableDataLocationFactory"	class="org.sdmxsource.util.factory.SdmxSourceWriteableDataLocationFactory" />
+
+<!--  
+  	<bean id="queryStructureRequestBuilderManagerImpl" class="org.sdmxsource.sdmx.querybuilder.manager.QueryStructureRequestBuilderManagerImpl" />
+  	<bean id="queryStructureRequestFactoryV20" class="org.sdmxsource.sdmx.querybuilder.factory.QueryStructureRequestFactoryV20" />
+  	<bean id="queryStructureRequestBuilderV20" class="org.sdmxsource.sdmx.querybuilder.builder.QueryStructureRequestBuilderV20" />
+  	<bean id="queryStructureRequestDocumentBuilderV20" class="org.sdmxsource.sdmx.querybuilder.builder.QueryStructureRequestDocumentBuilderV20" />
+  	-->
+
+	<bean id="converterDataReaderEngineProvider" class="com.intrasoft.sdmx.converter.services.ConverterDataReaderEngineProvider" />
+	<bean id="converterDataWriterEngineProvider" class="com.intrasoft.sdmx.converter.services.ConverterDataWriterEngineProvider" /> 
+
+   	<bean id="structureParsingManagerImpl" primary="true" class="org.sdmxsource.sdmx.structureparser.manager.parsing.impl.StructureParsingManagerImpl"/>
+  	<bean id="dataInformationManagerImpl" class="org.sdmxsource.sdmx.dataparser.manager.impl.DataInformationManagerImpl" />  
+  	
+  	<bean id="rESTSdmxBeanRetrievalManager"	class="org.sdmxsource.sdmx.structureretrieval.manager.RESTSdmxBeanRetrievalManager">
+  		<constructor-arg type="java.lang.String" value="https://registry.sdmx.org/FusionRegistry/ws/rest/"/>
+  	</bean>
+  	
+  	<context:property-placeholder location="classpath:converter-api-test.properties"/>
+</beans>
+

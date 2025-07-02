@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:element name="Conversion_Template">
+		<xs:complexType>
+            <xs:sequence>
+				<xs:element ref="Input_Output" maxOccurs="unbounded"/>
+				<xs:element ref="Registry_Parameters"/>
+				<xs:element ref="CSV_Parameters"/>
+				<xs:element ref="Other_Parameters"/>
+				<xs:element ref="Namespace" minOccurs="0"/>
+			</xs:sequence>
+            <xs:attribute name="createdWith" type="xs:string" use="optional"/>
+        </xs:complexType>
+	</xs:element>
+	<xs:element name="Input_Output">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="InputFileName"/>
+				<xs:element ref="OutputFileName"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="InputFileName">
+		<xs:complexType mixed="true">
+			<xs:attribute name="format" type="FormatType" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OutputFileName">
+		<xs:complexType mixed="true">
+			<xs:attribute name="format" type="FormatType" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Registry_Parameters">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="DSD"/>
+				<xs:element ref="Dataflow"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DSD">
+		<xs:complexType mixed="true">
+			<xs:attribute name="agency" type="IDType" use="required"/>
+			<xs:attribute name="id" type="IDType" use="required"/>
+			<xs:attribute name="version" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Dataflow">
+		<xs:complexType>
+			<xs:attribute name="agency" type="IDType" use="required"/>
+			<xs:attribute name="id" type="IDType" use="required"/>
+			<xs:attribute name="version" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CSV_Parameters">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Input"/>
+				<xs:element ref="Output"/>
+				<xs:element ref="HeaderRow"/>
+				<xs:element ref="MappingInfo"/>
+				<xs:element ref="Mapping"/>
+				<xs:element ref="Transcoding"/>
+				<xs:element ref="CSVDelimiter"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Input">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="MultiLevelCSV"/>
+					<xs:element ref="InputOrdered"/>
+				</xs:choice>
+				<xs:element ref="UnescapeCSVInputFields"/>
+				<xs:element ref="HeaderInformation"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="HeaderInformation" type="xs:string"/>
+	<xs:element name="MultiLevelCSV">
+		<xs:simpleType>
+			<xs:restriction base="xs:integer">
+				<xs:minInclusive value="2"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="InputOrdered" type="xs:boolean"/>
+	<xs:element name="Output">
+		<xs:complexType>
+			<xs:sequence minOccurs="0">
+				<xs:element ref="OutputDateFormat" />
+				<xs:element ref="WriteHeader" />
+				<xs:element ref="EscapeCSVOutputFields" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OutputDateFormat">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="" />
+				<xs:enumeration value="SDMX"/>
+				<xs:enumeration value="GESMES"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="WriteHeader" type="xs:boolean"/>
+	<xs:element name="UnescapeCSVInputFields" type="xs:boolean"/>
+	<xs:element name="EscapeCSVOutputFields" type="xs:boolean"/>
+
+	<!--  
+	<xs:element name="ExistHeaderRow" type="xs:boolean"/>
+	-->
+	
+	<xs:element name="HeaderRow">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+                <xs:enumeration value="" />
+				<xs:enumeration value="USE_COLUMN_HEADERS"/>
+				<xs:enumeration value="DISREGARD_COLUMN_HEADERS"/>
+				<xs:enumeration value="NO_COLUMN_HEADERS"/>				
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MappingInfo">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+                <xs:enumeration value="" />
+				<xs:enumeration value="Map measure Dimension"/>
+				<xs:enumeration value="Map CrossX measures"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Mapping">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Concept" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Concept">
+		<xs:complexType>
+			<xs:attribute name="fixed" type="xs:boolean" use="optional"/>
+			<xs:attribute name="level" type="xs:string" use="optional"/>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="value" type="xs:string" use="required"/>
+			<xs:attribute name="targetconcept" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Transcoding">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="StructureSet" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="StructureSet">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CodelistMap" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CodelistMap">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CodeMap" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CodeMap">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MapCodeRef"/>
+				<xs:element ref="MapTargetCodeRef"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MapCodeRef" type="xs:string"/>
+	<xs:element name="MapTargetCodeRef" type="xs:string"/>
+	<xs:element name="CSVDelimiter" type="xs:string"/>
+	<xs:element name="Other_Parameters">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="GesmesTsTechnique"/>
+				<xs:element ref="SDMXValidation"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GesmesTsTechnique">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+                <xs:enumeration value="" />
+				<xs:enumeration value="Time Range"/>
+				<xs:enumeration value="Single Observation"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="SDMXValidation" type="xs:boolean"/>
+	<xs:element name="Namespace">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="URN"/>
+				<xs:element ref="Prefix"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="URN" type="xs:anyURI"/>
+	<xs:element name="Prefix" type="xs:NCName"/>
+	<xs:simpleType name="FormatType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CSV"/>
+			<xs:enumeration value="FLR"/>
+			<xs:enumeration value="MULTI_LEVEL_CSV"/>
+			<xs:enumeration value="SDMX_CSV"/>
+			<xs:enumeration value="SDMX_CSV_2_0"/>
+			<xs:enumeration value="iSDMX_CSV"/>
+			<xs:enumeration value="iSDMX_CSV_2_0"/>
+			<xs:enumeration value="COMPACT_SDMX"/>
+			<xs:enumeration value="GENERIC_SDMX"/>
+			<xs:enumeration value="UTILITY_SDMX"/>
+			<xs:enumeration value="CROSS_SDMX"/>
+			<xs:enumeration value="GESMES_TS"/>
+			<xs:enumeration value="GESMES_2_1"/>
+			<xs:enumeration value="GESMES_DSIS"/>
+			<xs:enumeration value="DSPL"/>			
+			<xs:enumeration value="GENERIC_DATA_2_1"/>
+			<xs:enumeration value="GENERIC_TS_DATA_2_1"/>
+			<xs:enumeration value="STRUCTURE_SPECIFIC_DATA_2_1"/>
+			<xs:enumeration value="STRUCTURE_SPECIFIC_TS_DATA_2_1"/>
+			<xs:enumeration value="STRUCTURE_SPECIFIC_DATA_3_0"/>
+			<xs:enumeration value="EXCEL"/>
+			<xs:enumeration value="MESSAGE_GROUP"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IDType">
+		<xs:annotation>
+			<xs:documentation>IDType provides a type which is used for restricting the characters in codes and IDs throughout all SDMX-ML messages. Valid characters include A-Z, a-z, @, 0-9, _, -, $.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([A-Z]|[a-z]|\*|@|[0-9]|_|$|\-|/|=)*"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

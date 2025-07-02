@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG">
+	<Appenders>
+		<RollingFile name="file" fileName="./../logs/converter-ws/converter-ws.log"
+					 filePattern="./../logs/converter-ws/converter-ws.%d{dd-MMM}.log.gz" append="true">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} %t %-5p %c{2} - %m%n" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10MB" />
+			</Policies>
+		</RollingFile>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%-5p: %c - %m%n" />
+		</Console>
+	</Appenders>
+	<Loggers>
+		<!-- Create the 'conversionFile' appender -->
+		<RollingFile name="conversionFile" fileName="./../logs/converter-ws/conversion.log"
+					 filePattern="./../logs/converter-ws/conversion.%d{dd-MMM}.log.gz" append="true">
+			<PatternLayout pattern="%t %-5p %c{2} - %m%n" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10MB" />
+			</Policies>
+		</RollingFile>
+
+		<!-- Define the ConversionLogger -->
+		<Logger name="ConversionLogger" level="info" additivity="false">
+			<AppenderRef ref="conversionFile" />
+			<AppenderRef ref="console" />
+		</Logger>
+
+		<Root level="info">
+			<AppenderRef ref="console" level="debug" />
+			<AppenderRef ref="file" level="info" />
+		</Root>
+	</Loggers>
+</Configuration>

@@ -1,0 +1,45 @@
+SDMX Converter is © 2009 by the European Community, represented by Eurostat.
+All rights reserved.
+
+SDMX Converter is published under the European Union Public License 
+(EUPL) version 1.1. If you do not accept this license, you are not 
+allowed to make any use of the X_Software or any parts thereof.
+
+SDMX Converter makes use of third-party Libraries, which are released
+under different licenses. Below you can find a list of these libraries
+and the license under which each of them is released. If you do not
+accept these licenses, you are not allowed to make any use of the 
+SDMX Converter or any parts thereof.
+
+Component							|	License
+---------------------------------------------------------
+activation.jar						|	CDDL v1.0
+axis-1.4.jar						|	Apache License v2.0
+axis-jaxrpc-1.4.jar					|	Apache License v2.0
+axis-saaj-1.4.jar					|	Apache License v2.0
+commons-cli-1.0.jar					|	Apache License v2.0
+commons-discovery-0.2.jar			|	Apache License v2.0
+commons-httpclient-3.1-rc1.jar		|	Apache License v2.0
+commons-io-1.2.jar					|	Apache License v2.0
+commons-lang-2.1.jar				|	Apache License v2.0
+core-r12.jar						|	EUPL v1.1
+forms-1.0.6.jar						|	BSD License
+jaxen-1.1.jar						|	BSD License
+jdom-1.0.jar						|	JDom License
+mail-1.3.2.jar						|	CDDL v1.0
+service-r12.jar						|	EUPL v1.1
+spring-1.2.8.jar					|	Apache License v2.0
+validator-1.0.2.jar					|	CDDL v1.0
+xom-1.0.jar							|	LGPL v2.1
+SDMX1-0-1.0.jar						|	LGPL v3.0
+SDMX2-0-2.0.jar						|	LGPL v3.0
+SDMX2-1-3.0.jar						|	LGPL v3.0
+SdmxApi-1.1.14c.jar					|	LGPL v3.0
+SdmxBeans-1.1.4c.jar				|	LGPL v3.0
+SdmxDataParser-1.1.4c.jar			|	LGPL v3.0
+SdmxEdiParser-1.1.4c.jar			|	LGPL v3.0
+SdmxFileQueryProcessor-1.1.4c.jar	|	LGPL v3.0
+SdmxQueryBuilder-1.1.4c.jar		|	LGPL v3.0
+SdmxSourceUtil-1.1.4c.jar			|	LGPL v3.0
+SdmxStructureParser-1.1.4c.jar		|	LGPL v3.0
+SdmxStructureRetrieval-1.1.4c.jar	|	LGPL v3.0
